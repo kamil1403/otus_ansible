@@ -32,7 +32,7 @@
 localhost ansible_connection=local
 ```
 <a id="two"></a>
-🧰 Шаг 2 - Шаблон конфигурации
+## 🧰 Шаг 2 - Шаблон конфигурации
 
 ```bash
 Nginx
@@ -48,7 +48,7 @@ server {
 }
 ```
 <a id="three"></a>
-🧰 Шаг 3 - Плейбук
+## 🧰 Шаг 3 - Плейбук
 
 ```bash
 - name: Setup Nginx on custom port
@@ -89,7 +89,7 @@ server {
         state: reloaded
 ```
 <a id="four"></a>
-🧰 Шаг 4 - Проверка работы
+## 🧰 Шаг 4 - Проверка работы
 
 ```bash
 ansible-playbook -i hosts.ini site.yml
