@@ -97,14 +97,14 @@ server {
 ansible-playbook -i hosts.ini site.yml
 Проверка доступности порта:
 curl -I http://localhost:8080
+
 Вывод консоли:
-
-Plaintext
-
 HTTP/1.1 200 OK
 Server: nginx/1.24.0 (Ubuntu)
-Date: Sun, 14 Dec 2025 13:13:05 GMT
+Date: Sun, 14 Dec 2025 13:32:36 GMT
 Content-Type: text/html
 Content-Length: 26
 Last-Modified: Sun, 14 Dec 2025 13:13:01 GMT
 Connection: keep-alive
+ETag: "693eb7dd-1a"
+Accept-Ranges: bytes
