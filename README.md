@@ -27,8 +27,6 @@
 <a id="one"></a>
 ## 🧰 Шаг 1 - Список хостов
 
-Работаем локально (`ansible_connection=local`).
-
 ```bash
 [webservers]
 localhost ansible_connection=local
