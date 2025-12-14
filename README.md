@@ -29,16 +29,17 @@
 
 Работаем локально (`ansible_connection=local`).
 
-```ini
+```bash
 [webservers]
 localhost ansible_connection=local
 <a id="two"></a>
+```
 
 🧰 Шаг 2 - Шаблон конфигурации
 В шаблоне templates/nginx.conf.j2 используем подстановку порта через переменную.
 
+```bash
 Nginx
-
 server {
     listen {{ nginx_port }};
     root /var/www/html;
@@ -50,13 +51,12 @@ server {
     }
 }
 <a id="three"></a>
+```
 
 🧰 Шаг 3 - Плейбук (Playbook)
 Реализация логики: установка пакета, накат конфига, создание index.html и старт сервиса.
 
-YAML
-
----
+```bash
 - name: Setup Nginx on custom port
   hosts: webservers
   become: yes
@@ -94,17 +94,14 @@ YAML
         name: nginx
         state: reloaded
 <a id="four"></a>
+```
 
 🧰 Шаг 4 - Проверка работы
 Запуск плейбука:
 
-Bash
-
+```bash
 ansible-playbook -i hosts.ini site.yml
 Проверка доступности порта:
-
-Bash
-
 curl -I http://localhost:8080
 Вывод консоли:
 
