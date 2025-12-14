@@ -32,9 +32,8 @@
 ```bash
 [webservers]
 localhost ansible_connection=local
-<a id="two"></a>
 ```
-
+<a id="two"></a>
 🧰 Шаг 2 - Шаблон конфигурации
 
 ```bash
@@ -49,9 +48,8 @@ server {
         try_files $uri $uri/ =404;
     }
 }
-<a id="three"></a>
 ```
-
+<a id="three"></a>
 🧰 Шаг 3 - Плейбук (Playbook)
 
 ```bash
@@ -91,9 +89,8 @@ server {
       service:
         name: nginx
         state: reloaded
-<a id="four"></a>
 ```
-
+<a id="four"></a>
 🧰 Шаг 4 - Проверка работы
 
 ```bash
