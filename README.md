@@ -32,3 +32,88 @@
 ```ini
 [webservers]
 localhost ansible_connection=local
+<a id="two"></a>
+
+🧰 Шаг 2 - Шаблон конфигурации
+В шаблоне templates/nginx.conf.j2 используем подстановку порта через переменную.
+
+Nginx
+
+server {
+    listen {{ nginx_port }};
+    root /var/www/html;
+    index index.html;
+    server_name _;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+<a id="three"></a>
+
+🧰 Шаг 3 - Плейбук (Playbook)
+Реализация логики: установка пакета, накат конфига, создание index.html и старт сервиса.
+
+YAML
+
+---
+- name: Setup Nginx on custom port
+  hosts: webservers
+  become: yes
+  vars:
+    nginx_port: 8080
+
+  tasks:
+    - name: Install nginx
+      apt:
+        name: nginx
+        state: latest
+        update_cache: yes
+
+    - name: Update config
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/sites-available/default
+      notify: Reload nginx
+
+    - name: Create index.html
+      copy:
+        content: "<h1>Otus Ansible {{ nginx_port }}</h1>"
+        dest: /var/www/html/index.html
+        mode: '0644'
+
+    - name: Enable service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+  handlers:
+    - name: Reload nginx
+      service:
+        name: nginx
+        state: reloaded
+<a id="four"></a>
+
+🧰 Шаг 4 - Проверка работы
+Запуск плейбука:
+
+Bash
+
+ansible-playbook -i hosts.ini site.yml
+Проверка доступности порта:
+
+Bash
+
+curl -I http://localhost:8080
+Вывод консоли:
+
+Plaintext
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Sun, 14 Dec 2025 13:13:05 GMT
+Content-Type: text/html
+Content-Length: 26
+Last-Modified: Sun, 14 Dec 2025 13:13:01 GMT
+Connection: keep-alive
